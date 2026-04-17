@@ -12,15 +12,12 @@ data = pd.DataFrame({
 })
 
 data = pd.get_dummies(data, columns=['Location'], drop_first=True)
+x, y = data.drop('Price', axis=1), data['Price']
 
-X, y = data.drop('Price',axis=1), data['Price']
-    
-print("Features (X):\n", X)
-print("\nTarget (Y):\n", y)
-Xtr,Xte,ytr,yte = train_test_split(X,y,test_size=0.2,random_state=42)
-model = LinearRegression().fit(Xtr,ytr)
-p = model.predict(Xte)
-print("\nMean Squared Error:", mean_squared_error(yte,p))
-print("Mean Absolute Error:", mean_absolute_error(yte,p))
-print("\nPredicted Prices:", p)
-print("Actual Prices:", yte.values)
+xtr, xte, ytr, yte = train_test_split(x, y, test_size=0.2, random_state=42)
+p = LinearRegression().fit(xtr, ytr).predict(xte)
+
+print("MSE:", mean_squared_error(yte, p))
+print("MAE:", mean_absolute_error(yte, p))
+print("Predicted:", p)
+print("Actual:", yte.values)

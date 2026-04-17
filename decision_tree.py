@@ -1,18 +1,17 @@
-from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
 
-X,y = fetch_california_housing(return_X_y=True)
-Xtr,Xte,ytr,yte = train_test_split(X,y,test_size=0.2,random_state=42)
+x = [[1],[2],[3],[4],[5],[6],[7],[8]]
+y = [2,4,6,8,10,12,14,16]
 
-g = GridSearchCV(DecisionTreeRegressor(), {'max_depth':[2,4,6,8]}, cv=3).fit(Xtr,ytr)
-p = g.predict(Xte)
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=0.25,random_state=42)
+
+g = GridSearchCV(DecisionTreeRegressor(), {'max_depth':[1,2,3]}, cv=2).fit(xtr,ytr)
+p = g.predict(xte)
 
 print(g.best_params_)
-
-plt.plot(p[:50], label='Predicted')
-plt.plot(yte[:50], label='Actual')
-plt.title("Decision Tree Prediction")
+plt.plot(p, label='Pred')
+plt.plot(yte, label='Actual')
 plt.legend()
 plt.show()
