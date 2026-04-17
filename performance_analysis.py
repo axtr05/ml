@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 df = pd.DataFrame({
@@ -19,11 +20,14 @@ y = df['Target']
 
 xtr, xte, ytr, yte = train_test_split(x, y, test_size=0.2, random_state=42)
 
-lr = LogisticRegression()
 dt = DecisionTreeClassifier()
+rf = RandomForestClassifier()
+svm = SVC()
 
-lr.fit(xtr, ytr)
 dt.fit(xtr, ytr)
+rf.fit(xtr, ytr)
+svm.fit(xtr, ytr)
 
-print("LR:", accuracy_score(yte, lr.predict(xte)))
-print("DT:", accuracy_score(yte, dt.predict(xte)))
+print("Decision Tree:", accuracy_score(yte, dt.predict(xte)))
+print("Random Forest:", accuracy_score(yte, rf.predict(xte)))
+print("SVM:", accuracy_score(yte, svm.predict(xte)))
